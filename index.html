@@ -16,10 +16,10 @@
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
             --card-bg: #ffffff;
-            --nav-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(255, 255, 255, 0.95);
             --shadow: rgba(0, 0, 0, 0.1);
         }
-
+    
         :root[data-theme="dark"] {
             --primary-color: #ffffff;
             --secondary-color: #a1a1a6;
@@ -29,10 +29,10 @@
             --text-primary: #f5f5f7;
             --text-secondary: #a1a1a6;
             --card-bg: #1d1d1f;
-            --nav-bg: rgba(0, 0, 0, 0.8);
+            --nav-bg: rgba(0, 0, 0, 0.95);
             --shadow: rgba(255, 255, 255, 0.1);
         }
-
+    
         /* Base Styles */
         * {
             margin: 0;
@@ -40,7 +40,7 @@
             box-sizing: border-box;
             -webkit-font-smoothing: antialiased;
         }
-
+    
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.5;
@@ -48,7 +48,7 @@
             background: var(--background);
             transition: all 0.3s ease;
         }
-
+    
         /* Theme Toggle */
         .theme-toggle {
             position: fixed;
@@ -66,16 +66,16 @@
             box-shadow: 0 2px 10px var(--shadow);
             transition: all 0.3s ease;
         }
-
+    
         .theme-toggle:hover {
             transform: scale(1.1);
         }
-
+    
         .theme-toggle i {
             font-size: 1.2rem;
             color: var(--text-primary);
         }
-
+    
         /* Navigation */
         .nav-container {
             position: fixed;
@@ -86,8 +86,9 @@
             background: var(--nav-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--shadow);
         }
-
+    
         .nav {
             max-width: 1200px;
             margin: 0 auto;
@@ -96,31 +97,34 @@
             justify-content: space-between;
             align-items: center;
         }
-
+    
         .nav-logo {
             font-size: 1.5rem;
             font-weight: 600;
             color: var(--text-primary);
             text-decoration: none;
         }
-
+    
         .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
         }
-
+    
         .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
             transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
         }
-
-        .nav-link:hover {
+    
+        .nav-link:hover, .nav-link.active {
             color: var(--accent-color);
+            background: rgba(41, 151, 255, 0.1);
         }
-
+    
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -128,8 +132,9 @@
             font-size: 1.5rem;
             color: var(--text-primary);
             cursor: pointer;
+            padding: 0.5rem;
         }
-
+    
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -139,19 +144,19 @@
             position: relative;
             overflow: hidden;
         }
-
+    
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
         }
-
+    
         .hero-header {
             display: flex;
             align-items: center;
             gap: 3rem;
         }
-
+    
         .profile-image {
             width: 200px;
             height: 200px;
@@ -160,17 +165,17 @@
             border: 4px solid var(--card-bg);
             box-shadow: 0 10px 30px var(--shadow);
         }
-
+    
         .profile-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
+    
         .hero-text {
             flex: 1;
         }
-
+    
         .hero-title {
             font-size: 4rem;
             font-weight: 700;
@@ -183,7 +188,7 @@
             transform: translateY(20px);
             animation: fadeInUp 1s forwards 0.5s;
         }
-
+    
         .hero-subtitle {
             font-size: 1.5rem;
             color: var(--text-secondary);
@@ -193,7 +198,7 @@
             transform: translateY(20px);
             animation: fadeInUp 1s forwards 0.7s;
         }
-
+    
         .hero-cta {
             display: inline-flex;
             align-items: center;
@@ -209,12 +214,12 @@
             transform: translateY(20px);
             animation: fadeInUp 1s forwards 0.9s;
         }
-
+    
         .hero-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(41, 151, 255, 0.2);
         }
-
+    
         /* Animations */
         @keyframes fadeInUp {
             to {
@@ -222,13 +227,13 @@
                 transform: translateY(0);
             }
         }
-
+    
         /* Responsive Design */
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block;
             }
-
+    
             .nav-links {
                 display: none;
                 position: absolute;
@@ -239,27 +244,29 @@
                 padding: 1rem;
                 flex-direction: column;
                 align-items: center;
+                gap: 1rem;
+                border-bottom: 1px solid var(--shadow);
             }
-
+    
             .nav-links.active {
                 display: flex;
             }
-
+    
             .hero-header {
                 flex-direction: column;
                 text-align: center;
                 gap: 2rem;
             }
-
+    
             .profile-image {
                 width: 150px;
                 height: 150px;
             }
-
+    
             .hero-title {
                 font-size: 2.5rem;
             }
-
+    
             .hero-subtitle {
                 font-size: 1.2rem;
             }
@@ -276,7 +283,7 @@
     <div class="nav-container">
         <nav class="nav">
             <a href="#" class="nav-logo">TP</a>
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-links">
@@ -291,7 +298,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="about">
         <div class="hero-content">
             <div class="hero-header">
                 <div class="profile-image">
@@ -299,7 +306,7 @@
                 </div>
                 <div class="hero-text">
                     <h1 class="hero-title">Data & Analytics Professional</h1>
-                    <p class="hero-subtitle">Transforming complex data into actionable insights at Amazon, driving business decisions through analytics innovation.</p>
+                    <p class="hero-subtitle">Hey there! I'm Teju. I'm a curious mind who knows a little about a lot of things. This broad knowledge helps me connect dots in unexpected ways, finding creative solutions to complex problems. Whether I'm working with startups or industry leaders like Amazon and Wells Fargo, I bring this unique perspective to every challenge. I love collaborating across teams - engineers, product folks, data scientists - combining different viewpoints to build solutions that make a real difference.</p>
                     <a href="#contact" class="hero-cta">
                         Get in touch
                         <i class="fas fa-arrow-right"></i>
@@ -325,6 +332,7 @@
 
         // Set initial theme
         const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', 'light');
         document.documentElement.setAttribute('data-theme', savedTheme);
         document.querySelector('.theme-toggle i').className = 
             savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
@@ -1724,3 +1732,85 @@ animateElements.forEach(element => {
     observer.observe(element);
 });
 </script>
+<script>
+    // Theme Toggle Functionality
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        const icon = document.querySelector('.theme-toggle i');
+        icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+
+    // Set initial theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelector('.theme-toggle i').className = 
+        savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Smooth scroll functionality
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            // Close mobile menu if open
+            navLinks.classList.remove('active');
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Active nav item on scroll
+    function updateActiveNavItem() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${section.id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+
+    document.addEventListener('scroll', updateActiveNavItem);
+    window.addEventListener('load', updateActiveNavItem);
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navLinks.classList.contains('active') && 
+            !e.target.closest('.nav-links') && 
+            !e.target.closest('.mobile-menu-btn')) {
+            navLinks.classList.remove('active');
+        }
+    });
+</script>
+</body>
+</html>
