@@ -1,23 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teju Pamarty | Data & Analytics</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Base Styles */
-        :root {
-            --primary-color: #000;
+        /* Theme Variables */
+        :root[data-theme="light"] {
+            --primary-color: #000000;
             --secondary-color: #86868b;
             --accent-color: #2997ff;
-            --background: #fff;
+            --background: #ffffff;
             --section-bg: #f5f5f7;
             --text-primary: #1d1d1f;
             --text-secondary: #86868b;
-            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-bg: #ffffff;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
+        :root[data-theme="dark"] {
+            --primary-color: #ffffff;
+            --secondary-color: #a1a1a6;
+            --accent-color: #2997ff;
+            --background: #000000;
+            --section-bg: #1d1d1f;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --card-bg: #1d1d1f;
+            --nav-bg: rgba(0, 0, 0, 0.8);
+            --shadow: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +46,34 @@
             line-height: 1.5;
             color: var(--text-primary);
             background: var(--background);
-            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: var(--card-bg);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-primary);
         }
 
         /* Navigation */
@@ -40,7 +83,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.8);
+            background: var(--nav-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
@@ -57,7 +100,7 @@
         .nav-logo {
             font-size: 1.5rem;
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--text-primary);
             text-decoration: none;
         }
 
@@ -71,11 +114,20 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .nav-link:hover {
             color: var(--accent-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
         }
 
         /* Hero Section */
@@ -94,12 +146,37 @@
             width: 100%;
         }
 
+        .hero-header {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--card-bg);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
         .hero-title {
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
@@ -127,7 +204,7 @@
             text-decoration: none;
             border-radius: 30px;
             font-weight: 500;
-            transition: var(--transition);
+            transition: all 0.3s ease;
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1s forwards 0.9s;
@@ -148,29 +225,66 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
             .hero-subtitle {
                 font-size: 1.2rem;
             }
-
-            .nav-links {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+
     <!-- Navigation -->
     <div class="nav-container">
         <nav class="nav">
             <a href="#" class="nav-logo">TP</a>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
             <ul class="nav-links">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#recommendations" class="nav-link">Recommendations</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
         </nav>
@@ -179,96 +293,180 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Data & Analytics Professional</h1>
-            <p class="hero-subtitle">Transforming complex data into actionable insights at Amazon, driving business decisions through analytics innovation.</p>
-            <a href="#contact" class="hero-cta">
-                Get in touch
-                <i class="fas fa-arrow-right"></i>
-            </a>
+            <div class="hero-header">
+                <div class="profile-image">
+                    <img src="profile.jpg" alt="Teju Pamarty">
+                </div>
+                <div class="hero-text">
+                    <h1 class="hero-title">Data & Analytics Professional</h1>
+                    <p class="hero-subtitle">Transforming complex data into actionable insights at Amazon, driving business decisions through analytics innovation.</p>
+                    <a href="#contact" class="hero-cta">
+                        Get in touch
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Set initial theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.querySelector('.theme-toggle i').className = 
+            savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
+        // Mobile Menu Functionality
+        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
-<!-- After the hero section, add: -->
-
 <!-- Experience Section -->
 <section class="experience" id="experience">
     <div class="section-container">
         <h2 class="section-title">Experience</h2>
         
-        <!-- Current Role Highlight -->
-        <div class="current-role">
-            <div class="role-content">
-                <h3>Amazon</h3>
-                <p class="role-title">Business Intelligence Engineer</p>
-                <p class="role-period">2022 - Present</p>
-                <div class="role-stats">
-                    <div class="stat">
-                        <span class="stat-number">1.5M+</span>
-                        <span class="stat-label">Employees Impacted</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">6</span>
-                        <span class="stat-label">Major Products</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">90%</span>
-                        <span class="stat-label">Data Optimization</span>
+        <div class="company-grid">
+            <!-- Amazon -->
+            <div class="company-card">
+                <div class="company-header">
+                    <img src="amazon.png" alt="Amazon Logo" class="company-logo">
+                    <div class="company-title">
+                        <h3>Amazon</h3>
+                        <span class="company-period">2022 - Present</span>
                     </div>
                 </div>
+                <p class="company-role">Business Intelligence Engineer</p>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-number">1.5M+</span>
+                        <span class="metric-label">Employees Impacted</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">6</span>
+                        <span class="metric-label">Major Products</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">90%</span>
+                        <span class="metric-label">Data Optimization</span>
+                    </div>
+                </div>
+                <div class="company-achievements">
+                    <ul>
+                        <li>Led enterprise-wide reporting platform implementation across 6 Amazon products</li>
+                        <li>Developed unified analytics dashboard integrating 50+ metrics</li>
+                        <li>Architected automated WBR system saving 16+ hours monthly</li>
+                    </ul>
+                </div>
             </div>
-            <div class="role-image">
-                <img src="amazon.png" alt="Amazon Logo">
-            </div>
-        </div>
 
-        <!-- Career Timeline -->
-        <div class="career-timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
+            <!-- PODS -->
+            <div class="company-card">
+                <div class="company-header">
                     <img src="pods.png" alt="PODS Logo" class="company-logo">
-                    <div class="timeline-details">
-                        <h4>PODS</h4>
-                        <p class="position">Business Intelligence Lead</p>
-                        <p class="period">2021 - 2022</p>
-                        <ul class="achievements">
-                            <li>Led enterprise-wide Tableau implementation</li>
-                            <li>Managed team of 8 engineers</li>
-                            <li>Implemented security measures for 15,000+ users</li>
-                        </ul>
+                    <div class="company-title">
+                        <h3>PODS</h3>
+                        <span class="company-period">2021 - 2022</span>
                     </div>
+                </div>
+                <p class="company-role">Business Intelligence Lead</p>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-number">100+</span>
+                        <span class="metric-label">Employees Trained</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">300+</span>
+                        <span class="metric-label">Dashboards</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">15K</span>
+                        <span class="metric-label">Users Supported</span>
+                    </div>
+                </div>
+                <div class="company-achievements">
+                    <ul>
+                        <li>Created comprehensive Tableau training guides and programs</li>
+                        <li>Led enterprise-wide Tableau implementation</li>
+                        <li>Implemented security measures for 15,000+ users</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
+            <!-- Navistar -->
+            <div class="company-card">
+                <div class="company-header">
                     <img src="navistar.png" alt="Navistar Logo" class="company-logo">
-                    <div class="timeline-details">
-                        <h4>Navistar</h4>
-                        <p class="position">Business Intelligence Engineer</p>
-                        <p class="period">2018 - 2021</p>
-                        <ul class="achievements">
-                            <li>Developed fraud detection system saving $5M annually</li>
-                            <li>Led data warehouse optimization initiatives</li>
-                            <li>Implemented real-time analytics dashboard</li>
-                        </ul>
+                    <div class="company-title">
+                        <h3>Navistar</h3>
+                        <span class="company-period">2018 - 2021</span>
                     </div>
+                </div>
+                <p class="company-role">Business Intelligence Engineer</p>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-number">150+</span>
+                        <span class="metric-label">Dashboards Migrated</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$5M</span>
+                        <span class="metric-label">Annual Savings</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">6</span>
+                        <span class="metric-label">Month Migration</span>
+                    </div>
+                </div>
+                <div class="company-achievements">
+                    <ul>
+                        <li>Migrated 150+ dashboards from Tableau to Power BI under 6 months</li>
+                        <li>Developed fraud detection system saving $5M annually</li>
+                        <li>Led data warehouse optimization initiatives</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="timeline-item">
-                <div class="timeline-content">
+            <!-- Wells Fargo -->
+            <div class="company-card">
+                <div class="company-header">
                     <img src="wells.png" alt="Wells Fargo Logo" class="company-logo">
-                    <div class="timeline-details">
-                        <h4>Wells Fargo</h4>
-                        <p class="position">Data Analyst</p>
-                        <p class="period">2017 - 2018</p>
-                        <ul class="achievements">
-                            <li>Developed automated reporting solutions</li>
-                            <li>Improved data accuracy by 40%</li>
-                            <li>Streamlined reporting processes</li>
-                        </ul>
+                    <div class="company-title">
+                        <h3>Wells Fargo</h3>
+                        <span class="company-period">2017 - 2018</span>
                     </div>
+                </div>
+                <p class="company-role">Data Analyst</p>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <span class="metric-number">40%</span>
+                        <span class="metric-label">Accuracy Improvement</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">100%</span>
+                        <span class="metric-label">Automation</span>
+                    </div>
+                </div>
+                <div class="company-achievements">
+                    <ul>
+                        <li>Developed automated reporting solutions</li>
+                        <li>Improved data accuracy by 40%</li>
+                        <li>Streamlined reporting processes</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -290,204 +488,394 @@
 .section-title {
     font-size: 3rem;
     margin-bottom: 3rem;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Current Role Styles */
-.current-role {
+.company-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 4rem;
-    margin-bottom: 4rem;
-    padding: 3rem;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.role-content h3 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.role-title {
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.role-period {
-    font-size: 1rem;
-    color: var(--accent-color);
-    margin-bottom: 2rem;
-}
-
-.role-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 2rem;
 }
 
-.stat {
+.company-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.company-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow);
+}
+
+.company-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 0.5rem;
+}
+
+.company-title h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.company-period {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}
+
+.company-role {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: var(--section-bg);
+    border-radius: 12px;
+}
+
+.metric-item {
     text-align: center;
 }
 
-.stat-number {
+.metric-number {
     display: block;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--accent-color);
     margin-bottom: 0.5rem;
 }
 
-.stat-label {
+.metric-label {
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
-.role-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.role-image img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Timeline Styles */
-.career-timeline {
-    position: relative;
-}
-
-.timeline-item {
-    margin-bottom: 3rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 1s forwards;
-    animation-play-state: paused;
-}
-
-.timeline-item.visible {
-    animation-play-state: running;
-}
-
-.timeline-content {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    padding: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: var(--transition);
-}
-
-.timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.company-logo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-}
-
-.timeline-details h4 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.position {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
-}
-
-.period {
-    font-size: 0.9rem;
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-}
-
-.achievements {
+.company-achievements ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.achievements li {
+.company-achievements li {
+    color: var(--text-secondary);
     margin-bottom: 0.5rem;
     padding-left: 1.5rem;
     position: relative;
 }
 
-.achievements li::before {
+.company-achievements li::before {
     content: '•';
     position: absolute;
     left: 0;
     color: var(--accent-color);
 }
 
-/* Responsive Design */
-@media (max-width: 968px) {
-    .current-role {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .role-stats {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-}
-
+/* Responsive Adjustments */
 @media (max-width: 768px) {
+    .company-grid {
+        grid-template-columns: 1fr;
+    }
+
     .section-title {
         font-size: 2rem;
     }
 
-    .timeline-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .company-logo {
-        margin: 0 auto;
-    }
-
-    .achievements {
-        text-align: left;
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1rem;
     }
 }
 </style>
+<!-- Skills Section -->
+<section class="skills" id="skills">
+    <div class="section-container">
+        <h2 class="section-title">Technical Skills</h2>
+        
+        <div class="skills-categories">
+            <!-- Programming & Querying -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3>Programming & Querying</h3>
+                    <span class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-tag">SQL</div>
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">Hive</div>
+                    <div class="skill-tag">PySpark</div>
+                    <div class="skill-tag">Scala</div>
+                </div>
+            </div>
 
-<script>
-// Intersection Observer for timeline animations
-const observerOptions = {
-    threshold: 0.1
-};
+            <!-- Cloud & Data Platforms -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3>Cloud & Data Platforms</h3>
+                    <span class="category-icon">
+                        <i class="fas fa-cloud"></i>
+                    </span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-tag">AWS</div>
+                    <div class="skill-tag">Redshift</div>
+                    <div class="skill-tag">Spark</div>
+                    <div class="skill-tag">Snowflake</div>
+                    <div class="skill-tag">Hadoop</div>
+                    <div class="skill-tag">CloudFormation</div>
+                    <div class="skill-tag">Teradata</div>
+                </div>
+            </div>
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
+            <!-- Dashboards & BI Tools -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3>Dashboards & BI Tools</h3>
+                    <span class="category-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-tag">Tableau</div>
+                    <div class="skill-tag">Power BI</div>
+                    <div class="skill-tag">QuickSight</div>
+                    <div class="skill-tag">Excel</div>
+                    <div class="skill-tag">SSRS</div>
+                    <div class="skill-tag">Kibana</div>
+                </div>
+            </div>
 
-document.querySelectorAll('.timeline-item').forEach(item => {
-    observer.observe(item);
-});
-</script>
+            <!-- Data Engineering & Automation -->
+            <div class="skill-category">
+                <div class="category-header">
+                    <h3>Data Engineering & Automation</h3>
+                    <span class="category-icon">
+                        <i class="fas fa-cogs"></i>
+                    </span>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-tag">PySpark</div>
+                    <div class="skill-tag">Hive</div>
+                    <div class="skill-tag">SSAS</div>
+                    <div class="skill-tag">RDBMS</div>
+                    <div class="skill-tag">Git</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Competencies -->
+        <div class="competencies">
+            <h3>Core Competencies</h3>
+            <div class="competencies-grid">
+                <div class="competency-card">
+                    <div class="competency-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Data Engineering & Analytics</h4>
+                    <p>Expert in SQL, Python, AWS (Redshift, Athena, S3, Glue, Step Functions). Built and optimized data pipelines serving <span class="highlight-number">1.5M+ employees</span> worldwide.</p>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4>Dashboards & Visualizations</h4>
+                    <p>Expert in Tableau, Power BI, QuickSight. Managed secure Tableau environments for <span class="highlight-number">15,000+ users</span>. Migrated <span class="highlight-number">150+ dashboards</span> to Power BI under <span class="highlight-number">6 months</span>.</p>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>Gen AI & Advanced Analytics</h4>
+                    <p>Leveraged Claude and Amazon Q for automated insights. Enhanced internal AI tools at Amazon, reducing product and customer data requests by <span class="highlight-number">90%</span>.</p>
+                </div>
+
+                <div class="competency-card">
+                    <div class="competency-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h4>Technical Leadership</h4>
+                    <p>Led cross-functional teams of <span class="highlight-number">8+ engineers</span>. Delivered <span class="highlight-number">$56K annual</span> cost savings through automation. Presented weekly business reviews to Amazon directors.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Skills Section Styles */
+.skills {
+    padding: 6rem 2rem;
+    background: var(--background);
+}
+
+.skills-categories {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.skill-category {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.category-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.category-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--accent-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skill-tag {
+    background: var(--section-bg);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.skill-tag:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Competencies Styles */
+.competencies {
+    margin-top: 4rem;
+}
+
+.competencies h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.competencies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.competency-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.competency-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow);
+}
+
+.competency-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-color);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.competency-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.competency-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.highlight-number {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .skills-categories {
+        gap: 1.5rem;
+    }
+
+    .skill-category {
+        padding: 1.5rem;
+    }
+
+    .competencies-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 <!-- Projects Section -->
 <section class="projects" id="projects">
     <div class="section-container">
         <h2 class="section-title">Featured Projects</h2>
         
-        <!-- Project Cards Container -->
         <div class="projects-grid">
             <!-- Global Employee Engagement Platform -->
             <div class="project-card">
@@ -505,8 +893,12 @@ document.querySelectorAll('.timeline-item').forEach(item => {
                         <span class="metric-label">Employees Served</span>
                     </div>
                     <div class="metric">
-                        <span class="metric-value">100%</span>
-                        <span class="metric-label">Global Coverage</span>
+                        <span class="metric-value">2,200+</span>
+                        <span class="metric-label">Sites Scaled</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">90%</span>
+                        <span class="metric-label">Data Optimization</span>
                     </div>
                 </div>
 
@@ -548,7 +940,7 @@ document.querySelectorAll('.timeline-item').forEach(item => {
                 </div>
             </div>
 
-            <!-- Weekly Business Review System -->
+            <!-- Automated Weekly Business Review System -->
             <div class="project-card">
                 <div class="project-header">
                     <span class="project-badge">Amazon • 2023–2024</span>
@@ -577,7 +969,92 @@ document.querySelectorAll('.timeline-item').forEach(item => {
                 </div>
             </div>
 
-            <!-- Add more project cards as needed -->
+            <!-- Enterprise Reporting Platform -->
+            <div class="project-card">
+                <div class="project-header">
+                    <span class="project-badge">Amazon • 2022–2024</span>
+                </div>
+                <h3>Enterprise Reporting Platform</h3>
+                <p class="project-description">
+                    Led enterprise-wide reporting platform implementation across 6 Amazon products, driving high manager adoption and significant daily time savings while scaling massively.
+                </p>
+                
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">2,200+</span>
+                        <span class="metric-label">Sites Scaled</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">90%</span>
+                        <span class="metric-label">Data Optimization</span>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">AWS Redshift</span>
+                    <span class="tech-tag">Athena</span>
+                    <span class="tech-tag">QuickSight</span>
+                    <span class="tech-tag">SQL</span>
+                </div>
+            </div>
+
+            <!-- Unified Analytics Dashboard -->
+            <div class="project-card">
+                <div class="project-header">
+                    <span class="project-badge">Amazon • 2024</span>
+                </div>
+                <h3>Unified Analytics Dashboard</h3>
+                <p class="project-description">
+                    Developed unified analytics dashboard integrating 50+ metrics, leveraging Gen AI to reduce manual data requests and generate significant annual cost savings with self-service capabilities.
+                </p>
+                
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">50+</span>
+                        <span class="metric-label">Metrics Integrated</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">$56K</span>
+                        <span class="metric-label">Annual Savings</span>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Amazon Q</span>
+                    <span class="tech-tag">Gen AI</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+            </div>
+
+            <!-- Secure Enterprise Tableau Environment -->
+            <div class="project-card">
+                <div class="project-header">
+                    <span class="project-badge">PODS • 2021–2022</span>
+                </div>
+                <h3>Secure Enterprise Tableau Environment</h3>
+                <p class="project-description">
+                    Architected, deployed and maintained enterprise-scale Tableau environments with comprehensive security measures, including multi-layer protection and advanced authentication.
+                </p>
+                
+                <div class="project-metrics">
+                    <div class="metric">
+                        <span class="metric-value">15,000</span>
+                        <span class="metric-label">Users Supported</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-value">300+</span>
+                        <span class="metric-label">Dashboards</span>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Tableau Server</span>
+                    <span class="tech-tag">Security Architecture</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Authentication</span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -586,23 +1063,24 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 /* Projects Section Styles */
 .projects {
     padding: 6rem 2rem;
-    background: white;
+    background: var(--section-bg);
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
 }
 
 .project-card {
-    background: var(--section-bg);
+    background: var(--card-bg);
     border-radius: 20px;
     padding: 2rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 30px var(--shadow);
 }
 
 .project-card::before {
@@ -619,8 +1097,8 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow);
 }
 
 .project-card:hover::before {
@@ -643,7 +1121,8 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 
 .project-card h3 {
     font-size: 1.5rem;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
+    color: var(--text-primary);
     line-height: 1.3;
 }
 
@@ -655,12 +1134,12 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 
 .project-metrics {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: white;
-    border-radius: 15px;
+    background: var(--section-bg);
+    border-radius: 12px;
 }
 
 .metric {
@@ -669,7 +1148,7 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 
 .metric-value {
     display: block;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--accent-color);
     margin-bottom: 0.5rem;
@@ -688,11 +1167,11 @@ document.querySelectorAll('.timeline-item').forEach(item => {
 
 .tech-tag {
     padding: 0.5rem 1rem;
-    background: white;
+    background: var(--section-bg);
     border-radius: 20px;
     font-size: 0.8rem;
     color: var(--text-secondary);
-    transition: var(--transition);
+    transition: all 0.3s ease;
 }
 
 .tech-tag:hover {
@@ -712,6 +1191,7 @@ document.querySelectorAll('.timeline-item').forEach(item => {
     }
 
     .project-metrics {
+        grid-template-columns: repeat(2, 1fr);
         padding: 1rem;
     }
 
@@ -740,149 +1220,157 @@ projectCards.forEach(card => {
     projectObserver.observe(card);
 });
 </script>
-<!-- Skills Section -->
-<section class="skills" id="skills">
+<!-- Recommendations Section -->
+<section class="recommendations" id="recommendations">
     <div class="section-container">
-        <h2 class="section-title">Technical Skills</h2>
+        <h2 class="section-title">Recommendations</h2>
         
-        <!-- Skills Categories -->
-        <div class="skills-categories">
-            <!-- Programming & Querying -->
-            <div class="skill-category">
-                <div class="category-header">
-                    <h3>Programming & Querying</h3>
-                    <span class="category-icon">
-                        <i class="fas fa-code"></i>
-                    </span>
+        <div class="recommendations-grid">
+            <!-- Declan Moss -->
+            <div class="recommendation-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
                 </div>
-                <div class="skills-grid">
-                    <div class="skill-item" data-level="Expert">
-                        <div class="skill-info">
-                            <span class="skill-name">SQL</span>
-                            <span class="skill-level">Expert</span>
+                <div class="recommendation-content">
+                    <p class="recommendation-text">
+                        "Teju is a BI Rockstar with a rare combination of technical expertise and an ability to interact with business customers on both strategic and tactical levels. His speed, creativity and accuracy have made him indispensable on both IT and business projects. I've had the pleasure of working with him for over two years now and have collaborated on several projects with various teams throughout Navistar. During those years, Teju was my go-to person for any BI reporting. Teju's ability to quickly understand the business needs and transform those in to very creative yet meaningful visualizations was unlike any I'd seen before."
+                    </p>
+                    <div class="recommender">
+                        <div class="recommender-avatar">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-item" data-level="Advanced">
-                        <div class="skill-info">
-                            <span class="skill-name">Python</span>
-                            <span class="skill-level">Advanced</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%"></div>
+                        <div class="recommender-info">
+                            <h4>Declan Moss</h4>
+                            <p>Enterprise Data Architect at International Motors</p>
                         </div>
                     </div>
-                    <!-- Add more skills with similar structure -->
                 </div>
             </div>
 
-            <!-- Cloud & Data Platforms -->
-            <div class="skill-category">
-                <div class="category-header">
-                    <h3>Cloud & Data Platforms</h3>
-                    <span class="category-icon">
-                        <i class="fas fa-cloud"></i>
-                    </span>
+            <!-- Robert Ongkobudidjojo -->
+            <div class="recommendation-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
                 </div>
-                <div class="skills-grid">
-                    <div class="skill-item" data-level="Expert">
-                        <div class="skill-info">
-                            <span class="skill-name">AWS</span>
-                            <span class="skill-level">Expert</span>
+                <div class="recommendation-content">
+                    <p class="recommendation-text">
+                        "Teju, I really appreciate what you have done for the team. It's been great working with you, your expertise and deep knowledge of Tableau have helped us with numerous critical dashboards that enable our team to easily view, analyze and take actions based on the data. Your sense of urgency and hard work are also really appreciated in getting the job done. Keep up the good work!"
+                    </p>
+                    <div class="recommender">
+                        <div class="recommender-avatar">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 90%"></div>
+                        <div class="recommender-info">
+                            <h4>Robert Ongkobudidjojo</h4>
+                            <p>Service Solutions | Aftersales | Parts | Supply Chain</p>
                         </div>
                     </div>
-                    <!-- Add more cloud platform skills -->
                 </div>
             </div>
 
-            <!-- Dashboards & BI Tools -->
-            <div class="skill-category">
-                <div class="category-header">
-                    <h3>Dashboards & BI Tools</h3>
-                    <span class="category-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </span>
+            <!-- Kevin Larson -->
+            <div class="recommendation-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
                 </div>
-                <div class="skills-grid">
-                    <div class="skill-item" data-level="Expert">
-                        <div class="skill-info">
-                            <span class="skill-name">Tableau</span>
-                            <span class="skill-level">Expert</span>
+                <div class="recommendation-content">
+                    <p class="recommendation-text">
+                        "I have been working with Teju for sometime now and have found him to be a valuable member of my team. I originally hired him to work on an upgrade of Tableau server. He not only performed the upgrade on time he started working on side projects we had. That short term project turned into a long term team mate. I find that Teju is very knowledgeable in Analytics and with Tableau. Teju has taken on any requests and projects we have asked of him and all have been done on time or early."
+                    </p>
+                    <div class="recommender">
+                        <div class="recommender-avatar">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 95%"></div>
+                        <div class="recommender-info">
+                            <h4>Kevin Larson</h4>
+                            <p>Applications Analyst Lead Sr</p>
                         </div>
                     </div>
-                    <!-- Add more BI tool skills -->
                 </div>
             </div>
-        </div>
 
-        <!-- Competencies Section -->
-        <div class="competencies">
-            <h3>Core Competencies</h3>
-            <div class="competencies-grid">
-                <div class="competency-card">
-                    <div class="competency-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h4>Data Engineering & Analytics</h4>
-                    <p>Expert in SQL, Python, AWS. Built and optimized data pipelines serving 1.5M+ employees worldwide.</p>
+            <!-- Anthony Balkonis -->
+            <div class="recommendation-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
                 </div>
-                <!-- Add more competency cards -->
+                <div class="recommendation-content">
+                    <p class="recommendation-text">
+                        "I have enjoyed working with you, Teju. Your deep knowledge of Tableau has been critical to the growth of our Part E-commerce Program at Navistar. You have a unique ability to interpret business requirements and turn them in to thoughtful visualizations. Your positive attitude has been a breath of fresh air as we tackled challenging opportunities together."
+                    </p>
+                    <div class="recommender">
+                        <div class="recommender-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="recommender-info">
+                            <h4>Anthony Balkonis</h4>
+                            <p>Vice President Network Development & Operations</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <style>
-/* Skills Section Styles */
-.skills {
+/* Recommendations Section Styles */
+.recommendations {
     padding: 6rem 2rem;
-    background: var(--section-bg);
+    background: var(--background);
 }
 
-.skills-categories {
+.recommendations-grid {
     display: grid;
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
     margin-top: 3rem;
 }
 
-.skill-category {
-    background: white;
+.recommendation-card {
+    background: var(--card-bg);
     border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: var(--transition);
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow);
 }
 
-.skill-category:hover {
+.recommendation-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px var(--shadow);
 }
 
-.category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.quote-icon {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: var(--accent-color);
+    opacity: 0.1;
+    font-size: 3rem;
+}
+
+.recommendation-text {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
     margin-bottom: 2rem;
+    position: relative;
 }
 
-.category-header h3 {
-    font-size: 1.5rem;
-    color: var(--text-primary);
+.recommender {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-top: 1px solid var(--shadow);
+    padding-top: 1.5rem;
 }
 
-.category-icon {
+.recommender-avatar {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
     background: var(--accent-color);
-    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -890,196 +1378,41 @@ projectCards.forEach(card => {
     font-size: 1.5rem;
 }
 
-.skills-grid {
-    display: grid;
-    gap: 1.5rem;
+.recommender-info h4 {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
 }
 
-.skill-item {
-    position: relative;
-}
-
-.skill-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.skill-name {
-    font-weight: 500;
-}
-
-.skill-level {
+.recommender-info p {
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
-.skill-bar {
-    height: 6px;
-    background: var(--section-bg);
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-.skill-progress {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent-color), #5856d6);
-    border-radius: 3px;
-    transform: scaleX(0);
-    transform-origin: left;
-    animation: progressAnimation 1s ease forwards;
-}
-
-/* Competencies Styles */
-.competencies {
-    margin-top: 4rem;
-}
-
-.competencies h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: var(--text-primary);
-}
-
-.competencies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.competency-card {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: var(--transition);
-}
-
-.competency-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.competency-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    color: white;
-    font-size: 2rem;
-}
-
-.competency-card h4 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.competency-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-@keyframes progressAnimation {
-    from {
-        transform: scaleX(0);
-    }
-    to {
-        transform: scaleX(1);
-    }
-}
-
-/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .skills-categories {
-        gap: 2rem;
-    }
-
-    .skill-category {
-        padding: 1.5rem;
-    }
-
-    .competencies-grid {
+    .recommendations-grid {
         grid-template-columns: 1fr;
+    }
+
+    .recommendation-card {
+        padding: 2rem;
     }
 }
 </style>
-
-<script>
-// Animate skill bars on scroll
-const skillItems = document.querySelectorAll('.skill-item');
-
-const skillObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.querySelector('.skill-progress').style.animation = 'progressAnimation 1s ease forwards';
-        }
-    });
-}, { threshold: 0.1 });
-
-skillItems.forEach(item => {
-    skillObserver.observe(item);
-});
-</script>
-<!-- Contact Section -->
-<section class="contact" id="contact">
-    <div class="section-container">
-        <h2 class="section-title">Get in Touch</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <a href="mailto:teju.deep00@gmail.com" class="contact-link">
-                        teju.deep00@gmail.com
-                    </a>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                    <h3>LinkedIn</h3>
-                    <a href="https://linkedin.com/in/tejudeeppamarty" target="_blank" class="contact-link">
-                        linkedin.com/in/tejudeeppamarty
-                    </a>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3>Tableau Public</h3>
-                    <a href="https://public.tableau.com/app/profile/teju.deep.pamarty/vizzes" target="_blank" class="contact-link">
-                        View My Visualizations
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Education Section -->
 <section class="education" id="education">
     <div class="section-container">
         <h2 class="section-title">Education</h2>
-        <div class="education-timeline">
+        
+        <div class="education-grid">
             <div class="education-card">
-                <div class="education-header">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="education-info">
-                        <h3>Master's in Electrical Engineering</h3>
-                        <h4>University of North Texas</h4>
-                        <span class="education-year">2015 – 2017</span>
-                    </div>
+                <div class="education-icon">
+                    <i class="fas fa-graduation-cap"></i>
                 </div>
                 <div class="education-content">
+                    <h3>Master's in Electrical Engineering</h3>
+                    <h4>University of North Texas</h4>
+                    <span class="education-period">2015 – 2017</span>
                     <ul class="education-details">
                         <li>Specialized in Signal Processing and Machine Learning</li>
                         <li>Research focus on Data Analytics and Pattern Recognition</li>
@@ -1088,17 +1421,13 @@ skillItems.forEach(item => {
             </div>
 
             <div class="education-card">
-                <div class="education-header">
-                    <div class="education-icon">
-                        <i class="fas fa-university"></i>
-                    </div>
-                    <div class="education-info">
-                        <h3>Bachelor's in Electronics and Instrumentation</h3>
-                        <h4>Jawaharlal Nehru Technological University</h4>
-                        <span class="education-year">2011 – 2015</span>
-                    </div>
+                <div class="education-icon">
+                    <i class="fas fa-university"></i>
                 </div>
                 <div class="education-content">
+                    <h3>Bachelor's in Electronics and Instrumentation</h3>
+                    <h4>Jawaharlal Nehru Technological University</h4>
+                    <span class="education-period">2011 – 2015</span>
                     <ul class="education-details">
                         <li>Foundation in Electronics and Data Systems</li>
                         <li>Technical project leadership experience</li>
@@ -1109,287 +1438,40 @@ skillItems.forEach(item => {
     </div>
 </section>
 
-<style>
-/* Contact Section Styles */
-.contact {
-    padding: 6rem 2rem;
-    background: white;
-}
-
-.contact-content {
-    margin-top: 3rem;
-}
-
-.contact-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.contact-card {
-    background: var(--section-bg);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: var(--transition);
-}
-
-.contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.contact-icon {
-    width: 70px;
-    height: 70px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-    color: white;
-    font-size: 1.8rem;
-}
-
-.contact-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.contact-link {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: var(--transition);
-}
-
-.contact-link:hover {
-    color: var(--text-primary);
-}
-
-/* Education Section Styles */
-.education {
-    padding: 6rem 2rem;
-    background: var(--section-bg);
-}
-
-.education-timeline {
-    max-width: 800px;
-    margin: 3rem auto 0;
-    display: grid;
-    gap: 2rem;
-}
-
-.education-card {
-    background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    transition: var(--transition);
-    position: relative;
-}
-
-.education-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--accent-color);
-    border-radius: 4px;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 0.3s ease;
-}
-
-.education-card:hover {
-    transform: translateX(10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-.education-card:hover::before {
-    transform: scaleY(1);
-}
-
-.education-header {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.education-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--accent-color);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
-
-.education-info h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.education-info h4 {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.education-year {
-    color: var(--accent-color);
-    font-size: 0.9rem;
-}
-
-.education-details {
-    list-style: none;
-    margin-left: calc(60px + 2rem);
-}
-
-.education-details li {
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-secondary);
-}
-
-.education-details li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--accent-color);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .contact-info {
-        grid-template-columns: 1fr;
-    }
-
-    .education-header {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .education-details {
-        margin-left: 0;
-    }
-
-    .education-icon {
-        margin: 0 auto;
-    }
-
-    .education-info {
-        text-align: center;
-    }
-}
-</style>
-
-<script>
-// Animate education cards on scroll
-const educationCards = document.querySelectorAll('.education-card');
-
-const educationObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'translateX(0)';
-        }
-    });
-}, { threshold: 0.1 });
-
-educationCards.forEach(card => {
-    card.style.opacity = 0;
-    card.style.transform = 'translateX(-20px)';
-    educationObserver.observe(card);
-});
-</script>
-<!-- Recommendations Section -->
-<section class="recommendations" id="recommendations">
+<!-- Contact Section -->
+<section class="contact" id="contact">
     <div class="section-container">
-        <h2 class="section-title">Recommendations</h2>
+        <h2 class="section-title">Get in Touch</h2>
         
-        <div class="recommendations-grid">
-            <!-- Declan Moss Recommendation -->
-            <div class="recommendation-card">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
-                <div class="recommendation-content">
-                    <p class="recommendation-text">
-                        "Teju is a BI Rockstar with a rare combination of technical expertise and an ability to interact with business customers on both strategic and tactical levels. His speed, creativity and accuracy have made him indispensable on both IT and business projects."
-                    </p>
-                    <div class="recommender">
-                        <div class="recommender-info">
-                            <h4>Declan Moss</h4>
-                            <p>Enterprise Data Architect at International Motors</p>
-                        </div>
-                    </div>
-                </div>
+                <h3>Email</h3>
+                <a href="mailto:teju.deep00@gmail.com" class="contact-link">
+                    teju.deep00@gmail.com
+                </a>
             </div>
 
-            <!-- Robert Ongkobudidjojo Recommendation -->
-            <div class="recommendation-card">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-linkedin"></i>
                 </div>
-                <div class="recommendation-content">
-                    <p class="recommendation-text">
-                        "Your expertise and deep knowledge of Tableau have helped us with numerous critical dashboards that enable our team to easily view, analyze and take actions based on the data. Your sense of urgency and hard work are really appreciated."
-                    </p>
-                    <div class="recommender">
-                        <div class="recommender-info">
-                            <h4>Robert Ongkobudidjojo</h4>
-                            <p>Service Solutions | Aftersales | Parts | Supply Chain</p>
-                        </div>
-                    </div>
-                </div>
+                <h3>LinkedIn</h3>
+                <a href="https://linkedin.com/in/tejudeeppamarty" target="_blank" class="contact-link">
+                    linkedin.com/in/tejudeeppamarty
+                </a>
             </div>
 
-            <!-- Kevin Larson Recommendation -->
-            <div class="recommendation-card">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-chart-bar"></i>
                 </div>
-                <div class="recommendation-content">
-                    <p class="recommendation-text">
-                        "I find that Teju is very knowledgeable in Analytics and with Tableau. Teju has taken on any requests and projects we have asked of him and all have been done on time or early. We have had our customers request him to work on their projects."
-                    </p>
-                    <div class="recommender">
-                        <div class="recommender-info">
-                            <h4>Kevin Larson</h4>
-                            <p>Applications Analyst Lead Sr</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Anthony Balkonis Recommendation -->
-            <div class="recommendation-card">
-                <div class="quote-icon">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <div class="recommendation-content">
-                    <p class="recommendation-text">
-                        "You have a unique ability to interpret business requirements and turn them in to thoughtful visualizations. Your positive attitude has been a breath of fresh air as we tackled challenging opportunities together."
-                    </p>
-                    <div class="recommender">
-                        <div class="recommender-info">
-                            <h4>Anthony Balkonis</h4>
-                            <p>Vice President Network Development & Operations</p>
-                        </div>
-                    </div>
-                </div>
+                <h3>Tableau Public</h3>
+                <a href="https://public.tableau.com/app/profile/teju.deep.pamarty/vizzes" target="_blank" class="contact-link">
+                    View My Visualizations
+                </a>
             </div>
         </div>
     </div>
@@ -1419,93 +1501,148 @@ educationCards.forEach(card => {
 </footer>
 
 <style>
-/* Recommendations Section Styles */
-.recommendations {
+/* Education Section Styles */
+.education {
     padding: 6rem 2rem;
-    background: white;
+    background: var(--section-bg);
 }
 
-.recommendations-grid {
+.education-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
 }
 
-.recommendation-card {
-    background: var(--section-bg);
+.education-card {
+    background: var(--card-bg);
     border-radius: 20px;
-    padding: 2.5rem;
-    position: relative;
-    transition: var(--transition);
-    overflow: hidden;
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow);
 }
 
-.recommendation-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-color), #5856d6);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-.recommendation-card:hover {
+.education-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px var(--shadow);
 }
 
-.recommendation-card:hover::before {
-    transform: scaleX(1);
-}
-
-.quote-icon {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    color: var(--accent-color);
-    opacity: 0.1;
-    font-size: 3rem;
-}
-
-.recommendation-content {
-    position: relative;
-    z-index: 1;
-}
-
-.recommendation-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-}
-
-.recommender {
+.education-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-color);
+    border-radius: 15px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
 }
 
-.recommender-info h4 {
-    font-size: 1.1rem;
+.education-content h3 {
     color: var(--text-primary);
-    margin-bottom: 0.25rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
 }
 
-.recommender-info p {
-    font-size: 0.9rem;
+.education-content h4 {
     color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.education-period {
+    display: inline-block;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.education-details {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.education-details li {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.education-details li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+/* Contact Section Styles */
+.contact {
+    padding: 6rem 2rem;
+    background: var(--background);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.contact-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow);
+}
+
+.contact-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 1.8rem;
+}
+
+.contact-card h3 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.contact-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--text-primary);
 }
 
 /* Footer Styles */
 .footer {
     padding: 3rem 2rem;
     background: var(--section-bg);
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid var(--shadow);
 }
 
 .footer-content {
@@ -1515,8 +1652,8 @@ educationCards.forEach(card => {
 }
 
 .footer-info h3 {
-    font-size: 1.2rem;
     color: var(--text-primary);
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
 }
 
@@ -1532,7 +1669,7 @@ educationCards.forEach(card => {
 .footer-links a {
     color: var(--text-secondary);
     font-size: 1.5rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
 }
 
 .footer-links a:hover {
@@ -1542,12 +1679,22 @@ educationCards.forEach(card => {
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .recommendations-grid {
+    .education-grid,
+    .contact-grid {
         grid-template-columns: 1fr;
     }
 
-    .recommendation-card {
-        padding: 2rem;
+    .education-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .education-icon {
+        margin: 0 auto;
+    }
+
+    .education-details {
+        text-align: left;
     }
 
     .footer-content {
@@ -1556,35 +1703,13 @@ educationCards.forEach(card => {
         gap: 1rem;
     }
 }
-
-/* Animation for recommendation cards */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.recommendation-card {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.recommendation-card:nth-child(1) { animation-delay: 0.1s; }
-.recommendation-card:nth-child(2) { animation-delay: 0.2s; }
-.recommendation-card:nth-child(3) { animation-delay: 0.3s; }
-.recommendation-card:nth-child(4) { animation-delay: 0.4s; }
 </style>
 
 <script>
-// Animate recommendations on scroll
-const recommendationCards = document.querySelectorAll('.recommendation-card');
+// Intersection Observer for animations
+const animateElements = document.querySelectorAll('.education-card, .contact-card');
 
-const recommendationObserver = new IntersectionObserver((entries) => {
+const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = 1;
@@ -1593,7 +1718,9 @@ const recommendationObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 
-recommendationCards.forEach(card => {
-    recommendationObserver.observe(card);
+animateElements.forEach(element => {
+    element.style.opacity = 0;
+    element.style.transform = 'translateY(20px)';
+    observer.observe(element);
 });
 </script>
